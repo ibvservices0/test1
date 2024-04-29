@@ -28,7 +28,7 @@
 
 
     <div>
-      <video id="vid"></video>
+      <video id="vid" autoPlay="true" muted="true" playsInline="true"></video>
     </div>
     <br />
     <button id="but" autoplay>
@@ -42,6 +42,7 @@
           let video = document.getElementById("vid");
           let mediaDevices = navigator.mediaDevices;
           vid.muted = true;
+
           but.addEventListener("click", () => {
    
               // Accessing the user camera and video.
