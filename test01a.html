@@ -9,7 +9,7 @@
       #demo-div span, #demo-div #num-observed-events {color: black;}
       h1 {margin-top: 0.5rem;}
       h4 {margin-top: 0.66rem; font-size:1.33rem;}
-      #demo-div li {line-height: 21px;}
+      #demo-div li {line-height: 42px; font-size:1.33rem;}
       #demo-div ul {margin-bottom: 0.66rem;}
     </style>
 </head>
@@ -59,7 +59,17 @@
 
 function updateFieldIfNotNull(fieldName, value, precision=10){
   if (value != null)
-    document.getElementById(fieldName).innerHTML = value.toFixed(precision);
+
+    if (value.toFixed(precision) > 9.8){
+      document.getElementById(fieldName).innerHTML = 9.8;
+    }
+    else if (value.toFixed(precision) < -9.8){
+      document.getElementById(fieldName).innerHTML = -9.8;
+    }
+    else{
+      document.getElementById(fieldName).innerHTML = value.toFixed(precision);
+    }
+    
 }
 
 function handleMotion(event) {
