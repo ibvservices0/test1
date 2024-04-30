@@ -11,12 +11,6 @@
           border: 2px solid black;
           position: relative;
       }
-
-      video {
-          width: 270px;
-          height: 480px;
-          object-fit: cover;
-      }
       h1 {margin-top: 0.5rem; color: grey;}
       
   </style>
@@ -32,7 +26,7 @@
 
     <!-- autoPlay + playsInline TRUE es obligatorio para que funcione en iOS-->
     <div>
-      <video id="vid" autoPlay="true" muted="true" playsInline="true"></video>
+      <video width="270px" height= "480px" id="vid" autoPlay="true" muted="true" playsInline="true"></video>
     </div>
     <br />
     <button id="but" autoplay style="font-size : 18px; width: 200px; height: 40px;">CAMARA ON/OFF</button>
