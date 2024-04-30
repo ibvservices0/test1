@@ -6,18 +6,19 @@
     <title>TEST-PREVISUALIZA</title>
     <style>
       div {
-          width: 250px;
-          height: 200px;
+          width: 360px;
+          height: 640px;
           border: 2px solid black;
           position: relative;
       }
 
       video {
-          width: 250px;
-          height: 200px;
+          width: 360px;
+          height: 640px;
           object-fit: cover;
       }
       h1 {margin-top: 0.5rem; color: grey;}
+      
   </style>
   </head>
   <body>
@@ -34,7 +35,7 @@
       <video id="vid" autoPlay="true" muted="true" playsInline="true"></video>
     </div>
     <br />
-    <button id="but" autoplay>INICIAR CAM.</button>
+    <button id="but" autoplay style="font-size : 16px; width: 100px; height: 30px;">INICIAR CAM.</button>
 
 
     <script>
@@ -52,11 +53,13 @@
    
             if (is_playing){
               video.innerHTML = "INICIAR CAM.";
+              is_playing = false;
 
               video.pause();
             }
             else{
               video.innerHTML = "PAUSAR CAM.";
+              is_playing = true;
 
               // Accessing the user camera and video.
               mediaDevices
