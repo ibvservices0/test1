@@ -40,19 +40,12 @@
             <li>eje-Z: <span id="Accelerometer_gz">0</span><span> m/s<sup>2</sup></span></li>
         </ul>
 
-        <br><br>
-        <br><br>
-        <br><br>
+        
 
       </div>
     </main>
 
-    <footer class="footer">
-      <div class="container">
-        <span class="text-muted small">This page is hosted on GitHub Pages, please see GitHub's privacy statement
-        <a href="https://help.github.com/articles/github-privacy-statement/">here</a>.</span>
-      </div>
-    </footer>
+    
 
 
 <script>
@@ -78,8 +71,10 @@ function handleMotion(event) {
   updateFieldIfNotNull('Accelerometer_gz', event.accelerationIncludingGravity.z);
 }
 
+
 let is_running = false;
 let demo_button = document.getElementById("start_demo");
+
 demo_button.onclick = function(e) {
   e.preventDefault();
   
@@ -101,15 +96,13 @@ demo_button.onclick = function(e) {
   }else{
     window.addEventListener("devicemotion", handleMotion);
     //window.addEventListener("deviceorientation", handleOrientation);
-    document.getElementById("start_demo").innerHTML = "PARAR";
+    //document.getElementById("start_demo").innerHTML = "PARAR";
+    demo_button.innerHTML = "PARAR";
     demo_button.classList.remove('btn-success');
     demo_button.classList.add('btn-danger');
     is_running = true;
   }
 };
-
-
-
 
 </script>
 
