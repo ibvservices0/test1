@@ -17,9 +17,11 @@
           height: 200px;
           object-fit: cover;
       }
+      h1 {margin-top: 0.5rem; color: grey;}
   </style>
   </head>
   <body>
+    
     <a href="javascript: history.go(-1)">Volver a MENU</a>
     <br><br>
     <h1>
@@ -27,24 +29,35 @@
     </h1>
 
 
+    <!-- autoPlay + playsInline TRUE es obligatorio para que funcione en iOS-->
     <div>
       <video id="vid" autoPlay="true" muted="true" playsInline="true"></video>
     </div>
     <br />
-    <button id="but" autoplay>
-      Open WebCam
-    </button>
+    <button id="but" autoplay>INICIAR CAM.</button>
 
 
     <script>
+
+      let is_playing = false;
+
       document.addEventListener("DOMContentLoaded", () => {
+
           let but = document.getElementById("but");
           let video = document.getElementById("vid");
+          //vid.muted = true;
           let mediaDevices = navigator.mediaDevices;
-          vid.muted = true;
 
           but.addEventListener("click", () => {
    
+            if (is_playing){
+              video.innerHTML = "INICIAR CAM.";
+
+              video.pause();
+            }
+            else{
+              video.innerHTML = "PAUSAR CAM.";
+
               // Accessing the user camera and video.
               mediaDevices
                   .getUserMedia({
@@ -59,8 +72,13 @@
                       });
                   })
                   .catch(alert);
+            }
+
+              
           });
+
       });
+
   </script>
 
   </body>
