@@ -12,7 +12,7 @@
     <a href="javascript: history.go(-1)">Volver a MENU</a>
     <br><br>
     <h1>
-        TEST foto TORCH2
+        TEST foto TORCH3
     </h1>
 
     <br>
@@ -35,6 +35,12 @@ document.addEventListener("DOMContentLoaded", () => {
   mycanvas.width = 360;
   mycanvas.height = 640;
 
+
+  but.addEventListener("click", () => {
+      mycanvas.getContext('2d').drawImage(video, 0, 0, mycanvas.width, mycanvas.height);
+  });
+
+
   let mediaDevices = navigator.mediaDevices;
 
   // Accessing the user camera and video.
@@ -50,16 +56,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 video.play();
             });
 
-            const mediaStreamTrack = stream.getVideoTracks()[0];
-
-            mediaStreamTrack.applyConstraints({
-              "torch": true,
-              "advanced": [{ "torch": true }]
-            });
-
-            but.addEventListener("click", () => {
-              mycanvas.getContext('2d').drawImage(video, 0, 0, mycanvas.width, mycanvas.height);
-            });
+            const videoTrack = stream.getVideoTracks()[0];
+            videoTrack.applyConstraints({torch: true})
+              .then(() => console.log(videoTrack.getSettings().torch));
 
         })
         .catch(alert);
