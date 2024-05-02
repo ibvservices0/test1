@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TEST-foto-ANDROID</title>
+    <style>
+       h1 {margin-top: 0.5rem; color: grey;}
+    </style>
   </head>
   <body>
     <a href="javascript: history.go(-1)">Volver a MENU</a>
@@ -11,5 +14,49 @@
     <h1>
       TEST foto ANDROID
     </h1>
+
+    <br><br>
+    <button id="but" autoplay style="font-size : 18px; width: 200px; height: 40px;">TOMAR FOTO</button>
+    <br>
+    <!-- autoPlay + playsInline TRUE es obligatorio para que funcione en iOS-->
+    <div>
+      <video width="270px" height= "480px" id="vid" autoPlay="true" muted="true" playsInline="true"></video>
+    </div>
+    <br><br>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  let but = document.getElementById("but");
+  let video = document.getElementById("vid");
+
+  let mediaDevices = navigator.mediaDevices;
+
+  but.addEventListener("click", () => {
+    alert("Botón Pulsado");
+  });
+
+
+  // Accessing the user camera and video.
+  mediaDevices
+        .getUserMedia({
+          audio: false,
+          video: {facingMode: 'environment'}
+        })
+        .then((stream) => {
+            // Changing the source of video to current stream.
+            video.srcObject = stream;
+            video.addEventListener("loadedmetadata", () => {
+                video.play();
+            });
+        })
+        .catch(alert);
+
+
+});
+
+</script>
+
   </body>
 </html>
