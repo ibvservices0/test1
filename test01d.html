@@ -53,7 +53,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const mediaStreamTrack = stream.getVideoTracks()[0];
 
             mediaStreamTrack.applyConstraints({
-              advanced: [{ torch: true }]
+              "torch": true,
+              "advanced": [{ "torch": true }]
             });
 
             but.addEventListener("click", () => {
