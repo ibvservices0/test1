@@ -12,7 +12,7 @@
     <a href="javascript: history.go(-1)">Volver a MENU</a>
     <br><br>
     <h1>
-        TEST foto TORCH5
+        TEST foto TORCH6
     </h1>
 
     <br>
@@ -46,7 +46,11 @@ document.addEventListener("DOMContentLoaded", () => {
   mycanvas.height = 640;
 
 
-  but.addEventListener("click", () => {tomaFoto();});
+  //but.addEventListener("click", () => {tomaFoto();});
+  but.onclick = function(e) {
+    e.preventDefault();
+    tomaFoto();
+  };
 
 
   let mediaDevices = navigator.mediaDevices;

@@ -12,7 +12,7 @@
     <a href="javascript: history.go(-1)">Volver a MENU</a>
     <br><br>
     <h1>
-      TEST foto FLASH5
+      TEST foto FLASH6
     </h1>
 
     <br>
@@ -54,7 +54,11 @@ document.addEventListener("DOMContentLoaded", () => {
   let video = document.getElementById("vid");
   //let foto = document.getElementById("imagen");
 
-  but.addEventListener("click", () => {tomaFoto();});
+  //but.addEventListener("click", () => {tomaFoto();});
+  but.onclick = function(e) {
+    e.preventDefault();
+    tomaFoto();
+  };
 
   let mediaDevices = navigator.mediaDevices;
 
