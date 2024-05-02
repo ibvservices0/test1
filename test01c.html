@@ -52,7 +52,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
             but.addEventListener("click", () => {
               
-              imageCapture.takePhoto()
+              var photoSettings = {'imageHeight': 640,'imageWidth': 360}
+
+              imageCapture.takePhoto(photoSettings)
               .then(blob => {
                 foto.src = URL.createObjectURL(blob);
                 foto.onload = () => { URL.revokeObjectURL(this.src); }
