@@ -16,26 +16,26 @@
     </h1>
 
     <br>
-    <button id="but" autoplay style="font-size : 18px; width: 200px; height: 40px;">TOMAR FOTO</button>
+    <button id="but" style="font-size : 18px; width: 200px; height: 40px;">TOMAR FOTO</button>
     <!-- autoPlay + playsInline TRUE es obligatorio para que funcione en iOS-->
     <div>
       <video width="270px" height= "480px" id="vid" autoPlay="true" muted="true" playsInline="true"></video>
     </div>
     <br>
+    <canvas id="thecanvas"></canvas>
 
+    
 <script>
 
 document.addEventListener("DOMContentLoaded", () => {
 
   let but = document.getElementById("but");
   let video = document.getElementById("vid");
+  let mycanvas = document.getElementById("thecanvas");
+  mycanvas.width = 360;
+  mycanvas.height = 640;
 
   let mediaDevices = navigator.mediaDevices;
-
-  but.addEventListener("click", () => {
-    alert("Botón Pulsado");
-  });
-
 
   // Accessing the user camera and video.
   mediaDevices
@@ -49,6 +49,17 @@ document.addEventListener("DOMContentLoaded", () => {
             video.addEventListener("loadedmetadata", () => {
                 video.play();
             });
+
+            const mediaStreamTrack = stream.getVideoTracks()[0];
+
+            mediaStreamTrack.applyConstraints({
+              advanced: [{ torch: true }]
+            });
+
+            but.addEventListener("click", () => {
+              mycanvas.getContext('2d').drawImage(video, 0, 0, mycanvas.width, mycanvas.height);
+            });
+
         })
         .catch(alert);
 
