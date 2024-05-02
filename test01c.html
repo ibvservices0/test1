@@ -22,6 +22,7 @@
       <video width="270px" height= "480px" id="vid" autoPlay="true" muted="true" playsInline="true"></video>
     </div>
     <br>
+    <img id="imagen">
 
 <script>
 
@@ -29,13 +30,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let but = document.getElementById("but");
   let video = document.getElementById("vid");
+  let foto = document.getElementById("imagen");
 
   let mediaDevices = navigator.mediaDevices;
-
-  but.addEventListener("click", () => {
-    alert("Botón Pulsado");
-  });
-
 
   // Accessing the user camera and video.
   mediaDevices
@@ -49,6 +46,21 @@ document.addEventListener("DOMContentLoaded", () => {
             video.addEventListener("loadedmetadata", () => {
                 video.play();
             });
+
+            const mediaStreamTrack = stream.getVideoTracks()[0];
+            const imageCapture = new ImageCapture(mediaStreamTrack);
+
+            but.addEventListener("click", () => {
+              
+              imageCapture.takePhoto()
+              .then(blob => {
+                foto.src = URL.createObjectURL(blob);
+                foto.onload = () => { URL.revokeObjectURL(this.src); }
+                })
+                .catch(error => console.error('takePhoto() error:', error));
+
+            });
+
         })
         .catch(alert);
 
