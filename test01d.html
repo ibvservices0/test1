@@ -12,11 +12,13 @@
     <a href="javascript: history.go(-1)">Volver a MENU</a>
     <br><br>
     <h1>
-        TEST foto TORCH3
+        TEST foto TORCH5
     </h1>
 
     <br>
-    <button id="but" style="font-size : 18px; width: 200px; height: 40px;">TOMAR FOTO</button>
+    <!--<button id="but" style="font-size : 18px; width: 200px; height: 40px;">TOMAR FOTO</button>-->
+    <a id="but" class="btn btn-lg btn-success py-1" href="#" role="button">TOMAR FOTO</a>
+
     <!-- autoPlay + playsInline TRUE es obligatorio para que funcione en iOS-->
     <div>
       <video width="270px" height= "480px" id="vid" autoPlay="true" muted="true" playsInline="true"></video>
@@ -27,6 +29,14 @@
 
 <script>
 
+
+function tomaFoto(){
+  let videoBis = document.getElementById("vid");
+  let mycanvasBis = document.getElementById("thecanvas");
+  mycanvasBis.getContext('2d').drawImage(videoBis, 0, 0, mycanvasBis.width, mycanvasBis.height);
+}
+
+
 document.addEventListener("DOMContentLoaded", () => {
 
   let but = document.getElementById("but");
@@ -36,9 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
   mycanvas.height = 640;
 
 
-  but.addEventListener("click", () => {
-      mycanvas.getContext('2d').drawImage(video, 0, 0, mycanvas.width, mycanvas.height);
-  });
+  but.addEventListener("click", () => {tomaFoto();});
 
 
   let mediaDevices = navigator.mediaDevices;
