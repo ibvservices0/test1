@@ -50,12 +50,13 @@ document.addEventListener("DOMContentLoaded", () => {
             const mediaStreamTrack = stream.getVideoTracks()[0];
             const imageCapture = new ImageCapture(mediaStreamTrack);
 
+            /* NO es una funcion
             var imageCaptureConfig = {
-              fillLightMode: "flash", /* or "torch" */
+              fillLightMode: "flash/torch", 
               focusMode: "continuous"
             };
-
             imageCapture.setOptions(imageCaptureConfig);
+            */
 
             but.addEventListener("click", () => {
               
