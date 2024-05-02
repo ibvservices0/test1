@@ -50,12 +50,20 @@ document.addEventListener("DOMContentLoaded", () => {
             const mediaStreamTrack = stream.getVideoTracks()[0];
             const imageCapture = new ImageCapture(mediaStreamTrack);
 
+            var imageCaptureConfig = {
+              fillLightMode: "flash", /* or "torch" */
+              focusMode: "continuous"
+            };
+
+            imageCapture.setOptions(imageCaptureConfig);
+
             but.addEventListener("click", () => {
               
               var photoSettings = {
                 'fillLightMode': "flash",
                 'imageHeight': 640,
-                'imageWidth': 360};
+                'imageWidth': 360
+              };
 
               imageCapture.takePhoto(photoSettings)
               .then(blob => {
