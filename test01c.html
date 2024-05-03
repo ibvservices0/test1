@@ -13,7 +13,7 @@
     <a href="javascript: history.go(-1)">Volver a MENU</a>
     <br><br>
     <h1>
-      TEST foto FLASH7
+      TEST foto FLASH8
     </h1>
 
     <br>
@@ -34,18 +34,27 @@ function tomaFoto(){
   let videoBis = document.getElementById("vid");
   let foto = document.getElementById("imagen");
   const mediaStreamTrack = videoBis.srcObject.getVideoTracks()[0];
+
   const imageCapture = new ImageCapture(mediaStreamTrack);
-  var photoSettings = {
+
+  if(typeof (imageCapture) == undefined){
+      alert("No se puede hacer activación del FLASH");
+  }
+  else{
+    var photoSettings = {
     'fillLightMode': "flash",
     'imageHeight': 640,
     'imageWidth': 360
-  };
-  imageCapture.takePhoto(photoSettings)
+    };
+    imageCapture.takePhoto(photoSettings)
               .then(blob => {
                 foto.src = URL.createObjectURL(blob);
                 foto.onload = () => { URL.revokeObjectURL(this.src); }
                 })
               .catch(error => console.error('takePhoto() error:', error));
+
+  }
+
 };
 
 
