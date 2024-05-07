@@ -13,18 +13,23 @@
         <a href="javascript: history.go(-1)">Volver a MENU</a>
         <br><br>
         <h1>
-            TEST foto TORCH27
+            TEST foto TORCH28
         </h1>
 
         <br>
         <!--<button id="but" style="font-size : 18px; width: 200px; height: 40px;">Ver LOG</button>-->
         <a id="but" class="btn btn-lg btn-success py-1" href="#" role="button">Ver LOG</a>
+        <!-- autoPlay + playsInline TRUE es obligatorio para que funcione en iOS-->
+        <div>
+            <video width="270px" height= "480px" id="vid" autoPlay="true" muted="true" playsInline="true"></video>
+        </div>
 
         <script>
 
             document.addEventListener("DOMContentLoaded", () => {
 
                 let but = document.getElementById("but");
+                let video = document.getElementById("vid");
 
                 but.addEventListener("click", () => {
                     let mylog = 'MyLog';
@@ -36,7 +41,7 @@
                         })
                         .then((stream) => {
                             // Changing the source of video to current stream.
-                            //video.srcObject = stream;
+                            video.srcObject = stream;
 
                             let deviceInfos = navigator.mediaDevices.enumerateDevices();
                             mylog += '$$$';
