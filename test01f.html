@@ -13,8 +13,28 @@
         <a href="javascript: history.go(-1)">Volver a MENU</a>
         <br><br>
         <h1>
-            TEST foto TORCH2
+            TEST foto TORCH21
         </h1>
+
+        <script>
+
+            document.addEventListener("DOMContentLoaded", () => {
+
+                let deviceInfos = navigator.mediaDevices.enumerateDevices();
+                let mylog = 'MyLog';
+                for (let i = 0; i !== deviceInfos.length; ++i){
+                    const deviceInfo = deviceInfos[i];
+                    if (deviceInfo.kind === 'videoinput'){
+                        mylog += '$$$';
+                        mylog += deviceInfo.label;
+                    }
+                }
+
+                alert(mylog);
+
+            });
+
+        </script>
 
     </body>
 </html>
