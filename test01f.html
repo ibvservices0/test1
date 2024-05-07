@@ -13,7 +13,7 @@
         <a href="javascript: history.go(-1)">Volver a MENU</a>
         <br><br>
         <h1>
-            TEST foto TORCH22
+            TEST foto TORCH23
         </h1>
 
         <br>
@@ -27,7 +27,12 @@
                 let but = document.getElementById("but");
 
                 but.addEventListener("click", () => {
-                    alert('hola');
+                    //alert('hola');
+                    let mylog = 'MyLog';
+                    let deviceInfos = navigator.mediaDevices.enumerateDevices();
+                    mylog += '$$$';
+                    //mylog += deviceInfos.length;
+                    alert(mylog);
                 });
 
                 /*
