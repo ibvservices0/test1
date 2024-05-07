@@ -13,13 +13,24 @@
         <a href="javascript: history.go(-1)">Volver a MENU</a>
         <br><br>
         <h1>
-            TEST foto TORCH21
+            TEST foto TORCH22
         </h1>
+
+        <br>
+        <!--<button id="but" style="font-size : 18px; width: 200px; height: 40px;">Ver LOG</button>-->
+        <a id="but" class="btn btn-lg btn-success py-1" href="#" role="button">Ver LOG</a>
 
         <script>
 
             document.addEventListener("DOMContentLoaded", () => {
 
+                let but = document.getElementById("but");
+
+                but.addEventListener("click", () => {
+                    alert('hola');
+                });
+
+                /*
                 let deviceInfos = navigator.mediaDevices.enumerateDevices();
                 let mylog = 'MyLog';
                 for (let i = 0; i !== deviceInfos.length; ++i){
@@ -29,8 +40,8 @@
                         mylog += deviceInfo.label;
                     }
                 }
-
                 alert(mylog);
+                */
 
             });
 
