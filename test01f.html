@@ -13,7 +13,7 @@
         <a href="javascript: history.go(-1)">Volver a MENU</a>
         <br><br>
         <h1>
-            TEST foto TORCH24
+            TEST foto TORCH25
         </h1>
 
         <br>
@@ -27,12 +27,25 @@
                 let but = document.getElementById("but");
 
                 but.addEventListener("click", () => {
-                    //alert('hola');
                     let mylog = 'MyLog';
-                    let deviceInfos = navigator.mediaDevices.enumerateDevices();
-                    mylog += '$$$';
-                    mylog += deviceInfos.length;
-                    alert(mylog);
+
+                    mediaDevices
+                        .getUserMedia({
+                            audio: false,
+                            video: {deviceId: undefined}
+                        })
+                        .then((stream) => {
+                            // Changing the source of video to current stream.
+                            //video.srcObject = stream;
+
+                            let deviceInfos = navigator.mediaDevices.enumerateDevices();
+                            mylog += '$$$';
+                            mylog += deviceInfos.length;
+                            alert(mylog);
+                            
+                            })
+                            .catch(alert);
+
                 });
 
                 /*
