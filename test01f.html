@@ -13,7 +13,7 @@
         <a href="javascript: history.go(-1)">Volver a MENU</a>
         <br><br>
         <h1>
-            TEST foto TORCH30
+            TEST foto TORCH31
         </h1>
 
         <br>
@@ -39,10 +39,9 @@
                     alert(mylog);
                 };
 
-                let mediaDevices = navigator.mediaDevices;
 
                 // Accessing the user camera and video.
-                mediaDevices.getUserMedia({
+                navigator.mediaDevices.getUserMedia({
                     audio: false,
                     video: {facingMode: 'environment'}
                 })
@@ -52,10 +51,17 @@
                     video.addEventListener("loadedmetadata", () => {
                         video.play();
 
-                        let deviceInfos = mediaDevices.enumerateDevices();
-                        let deviceinfos_length = deviceInfos.length;
-                        mylog += '$$$';
-                        mylog += deviceinfos_length.toString();
+                        navigator.mediaDevices.enumerateDevices()
+                        .then((devices) => {
+                            devices.forEach((device) => {
+                                mylog += '$$$';
+                                mylog += device.label;
+                                //console.log(`${device.kind}: ${device.label} id = ${device.deviceId}`);
+                            });
+                        })
+                        .catch((err) => {
+                            alert(err.message);
+                        });
 
                     });
                 }).catch(alert);
