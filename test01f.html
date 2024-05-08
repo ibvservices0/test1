@@ -13,7 +13,7 @@
         <a href="javascript: history.go(-1)">Volver a MENU</a>
         <br><br>
         <h1>
-            TEST foto TORCH28
+            TEST foto TORCH29
         </h1>
 
         <br>
@@ -31,27 +31,33 @@
                 let but = document.getElementById("but");
                 let video = document.getElementById("vid");
 
-                but.addEventListener("click", () => {
-                    let mylog = 'MyLog';
+                let mylog = 'MyLog';
 
-                    navigator.mediaDevices
-                        .getUserMedia({
-                            audio: false,
-                            video: {deviceId: undefined}
-                        })
-                        .then((stream) => {
-                            // Changing the source of video to current stream.
-                            video.srcObject = stream;
+                //but.addEventListener("click", () => {tomaFoto();});
+                but.onclick = function(e) {
+                    e.preventDefault();
+                    alert(mylog);
+                };
 
-                            let deviceInfos = navigator.mediaDevices.enumerateDevices();
-                            mylog += '$$$';
-                            mylog += deviceInfos.length;
-                            alert(mylog);
-                            
-                            })
-                            .catch(alert);
+                let mediaDevices = navigator.mediaDevices;
 
-                });
+                // Accessing the user camera and video.
+                mediaDevices.getUserMedia({
+                    audio: false,
+                    video: {facingMode: 'environment'}
+                })
+                .then((stream) => {
+                    // Changing the source of video to current stream.
+                    video.srcObject = stream;
+                    video.addEventListener("loadedmetadata", () => {
+                        video.play();
+
+                        let deviceInfos = mediaDevices.enumerateDevices();
+                        mylog += '$$$';
+                        mylog += deviceInfos.length;
+
+                    });
+                }).catch(alert);
 
                 /*
                 let deviceInfos = navigator.mediaDevices.enumerateDevices();
