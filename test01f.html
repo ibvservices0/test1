@@ -13,7 +13,7 @@
         <a href="javascript: history.go(-1)">Volver a MENU</a>
         <br><br>
         <h1>
-            TEST foto TORCH29
+            TEST foto TORCH30
         </h1>
 
         <br>
@@ -53,8 +53,9 @@
                         video.play();
 
                         let deviceInfos = mediaDevices.enumerateDevices();
+                        let deviceinfos_length = deviceInfos.length;
                         mylog += '$$$';
-                        mylog += deviceInfos.length;
+                        mylog += deviceinfos_length.toString();
 
                     });
                 }).catch(alert);
