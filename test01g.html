@@ -13,7 +13,7 @@
         <a href="javascript: history.go(-1)">Volver a MENU</a>
         <br><br>
         <h1>
-            TEST foto FLASH--2
+            TEST foto FLASH-2
         </h1>
         <br><br>
 
@@ -135,9 +135,9 @@
 
                 but.addEventListener("click", () => {
                     let photoSettings = {'fillLightMode': "flash", 'imageHeight': 640, 'imageWidth': 360};
-                    imageCapture.takePhoto(photoSettings).then(blob => {
-                        foto.src = URL.createObjectURL(blob);
-                    })
+                    imageCapture.takePhoto(photoSettings).then(blob => {foto.src = URL.createObjectURL(blob);})
+                    .catch(error => console.error('takePhoto() error:', error));
+                    imageCapture.takePhoto(photoSettings).then(blob => {foto.src = URL.createObjectURL(blob);})
                     .catch(error => console.error('takePhoto() error:', error));
                 });
 
