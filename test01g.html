@@ -36,8 +36,8 @@
                 let foto = document.getElementById("imagen");
                 const mediaStreamTrack = videoBis.srcObject.getVideoTracks()[0];
                 const imageCapture = new ImageCapture(mediaStreamTrack);
-                //let photoSettings = {'fillLightMode': "flash",'imageHeight': 640,'imageWidth': 360};
-                let photoSettings = {'fillLightMode': "flash"};
+                let photoSettings = {'fillLightMode': "flash", 'imageHeight': 640, 'imageWidth': 360};
+                //let photoSettings = {'fillLightMode': "flash"};
                 imageCapture.takePhoto(photoSettings).then(blob => {
                     foto.src = URL.createObjectURL(blob);
                     //foto.onload = () => { URL.revokeObjectURL(this.src); }
