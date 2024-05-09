@@ -13,7 +13,7 @@
         <a href="javascript: history.go(-1)">Volver a MENU</a>
         <br><br>
         <h1>
-            TEST foto TORCH35
+            TEST foto TORCH36
         </h1>
 
         <br>
@@ -27,6 +27,11 @@
         <script>
 
             function restart(idDevice){
+                if (window.stream) {
+                    window.stream.getTracks().forEach(track => {
+                        track.stop();
+                    });
+                }
                 let videoBis = document.getElementById("vid");
                 // Accessing the user camera and video.
                 navigator.mediaDevices.getUserMedia({
