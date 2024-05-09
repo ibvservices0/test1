@@ -13,7 +13,7 @@
         <a href="javascript: history.go(-1)">Volver a MENU</a>
         <br><br>
         <h1>
-            TEST foto TORCH32
+            TEST foto TORCH33
         </h1>
 
         <br>
@@ -26,17 +26,38 @@
 
         <script>
 
+            function restart(idDevice){
+                let videoBis = document.getElementById("vid");
+                // Accessing the user camera and video.
+                navigator.mediaDevices.getUserMedia({
+                    audio: false,
+                    video: {deviceId: {exact: idDevice}}
+                })
+                .then((streamBis) => {
+                    // Changing the source of video to current stream.
+                    videoBis.srcObject = streamBis;
+                    videoBis.addEventListener("loadedmetadata", () => {
+                        videoBis.play();
+                    });
+                    const videoTrack = streamBis.getVideoTracks()[0];
+                    videoTrack.applyConstraints({torch: true})
+                        .then(() => console.log(videoTrack.getSettings().torch));
+
+                }).catch(alert);
+            }
+
+
             document.addEventListener("DOMContentLoaded", () => {
 
                 let but = document.getElementById("but");
                 let video = document.getElementById("vid");
 
-                let mylog = 'MyLog';
+                let idSelected;
 
                 //but.addEventListener("click", () => {tomaFoto();});
                 but.onclick = function(e) {
                     e.preventDefault();
-                    alert(mylog);
+                    restart(idSelected);
                 };
 
 
@@ -56,8 +77,11 @@
                             devices.forEach((device) => {
                                 //console.log(`${device.kind}: ${device.label} id = ${device.deviceId}`);
                                 if (device.kind === 'videoinput'){
-                                    mylog += '$$$';
-                                    mylog += device.label;
+                                    if ((device.label === 'camera2 0, facing back')||
+                                    (device.label === 'Cámara trasera')||
+                                    (device.label === 'Back Camera')){
+                                        idSelected = device.deviceId;
+                                    }
                                 }
                             });
                         })
