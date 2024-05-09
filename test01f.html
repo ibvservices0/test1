@@ -13,7 +13,7 @@
         <a href="javascript: history.go(-1)">Volver a MENU</a>
         <br><br>
         <h1>
-            TEST foto TORCH36
+            TEST foto TORCH37
         </h1>
 
         <br>
@@ -62,8 +62,8 @@
                 //but.addEventListener("click", () => {tomaFoto();});
                 but.onclick = function(e) {
                     e.preventDefault();
-                    //restart(idSelected);
-                    alert('test');
+                    restart(idSelected);
+                    //alert('test');
                 };
 
 
@@ -87,7 +87,7 @@
                                     (device.label === 'Cámara trasera')||
                                     (device.label === 'Back Camera')){
                                         idSelected = device.deviceId;
-                                        restart(idSelected);
+                                        //restart(idSelected);
                                     }
                                 }
                             });
