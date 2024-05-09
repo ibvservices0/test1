@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>TEST-foto-FLASH-2</title>
+        <style>
+            h1 {margin-top: 0.5rem; color: grey;}
+            a {font-size:1.2rem;}
+        </style>
+    </head>
+    <body>
+        <a href="javascript: history.go(-1)">Volver a MENU</a>
+        <br><br>
+        <h1>
+            TEST foto FLASH-2
+        </h1>
+        <br><br>
+
+        <br>
+        <!--<button id="but" style="font-size : 18px; width: 200px; height: 40px;">TOMAR FOTO</button>-->
+        <a id="but" class="btn btn-lg btn-success py-1" href="#" role="button">TOMAR FOTO</a>
+
+        <!-- autoPlay + playsInline TRUE es obligatorio para que funcione en iOS-->
+        <div>
+            <video width="270px" height= "480px" id="vid" autoPlay="true" muted="true" playsInline="true"></video>
+        </div>
+        <br>
+        <img id="imagen">
+
+
+        <script>
+
+            function tomaFoto(){
+                let videoBis = document.getElementById("vid");
+                let foto = document.getElementById("imagen");
+                const mediaStreamTrack = videoBis.srcObject.getVideoTracks()[0];
+                const imageCapture = new ImageCapture(mediaStreamTrack);
+                let photoSettings = {
+                    'fillLightMode': "flash",
+                    'imageHeight': 640,
+                    'imageWidth': 360
+                };
+                imageCapture.takePhoto(photoSettings).then(blob => {
+                    foto.src = URL.createObjectURL(blob);
+                    foto.onload = () => { URL.revokeObjectURL(this.src); }
+                })
+                .catch(error => console.error('takePhoto() error:', error));
+            }
+
+
+            let but = document.getElementById("but");
+            let video = document.getElementById("vid");
+
+            //but.addEventListener("click", () => {tomaFoto();});
+            but.onclick = function(e) {
+                e.preventDefault();
+                tomaFoto();
+            };
+
+
+            function gotDevices(deviceInfos) {
+                let myDeviceId;
+                for (let i = 0; i !== deviceInfos.length; ++i) {
+                    const deviceInfo = deviceInfos[i];
+                    const option = document.createElement('option');
+                    option.value = deviceInfo.deviceId;
+                    option.text = deviceInfo.label ;
+                    if (deviceInfo.kind === 'videoinput') {
+                        if ((option.text.includes('0,'))||
+                            (option.text === 'Cámara trasera')||
+                            (option.text === 'Back Camera')){
+                                myDeviceId = option.value;
+                                break;
+                        } else {console.log('Some other kind of source/device: ', deviceInfo);}
+                        
+                    } else {
+                        console.log('Some other kind of source/device: ', deviceInfo);
+                    }
+                }
+                return myDeviceId;
+            }
+
+
+            function handleError(error) {
+                console.log('navigator.MediaDevices.getUserMedia error: ', error.message, error.name);
+            }
+
+
+            function handleErrorBis(error) {
+                alert(error.message);
+            }
+            
+
+            function start(myIdDevice) {
+                if (window.stream) {
+                    window.stream.getTracks().forEach(track => {
+                        track.stop();
+                    });
+                }
+                const videoSource = myIdDevice;
+                /*
+                const constraints = {
+                    audio: false,
+                    video: {deviceId: videoSource ? {exact: videoSource} : undefined}
+                };
+                */
+               let constraints;
+               if (videoSource){
+                    constraints = {
+                        audio: false,
+                        video: {deviceId: {exact: videoSource}}
+                    };
+               }
+               else{
+                    constraints = {
+                        audio: false,
+                        video: {facingMode: 'environment'}
+                    };
+               }
+
+                navigator.mediaDevices.getUserMedia(constraints).then(gotStream).catch(handleErrorBis);
+            }
+
+
+            function gotStream(stream) {
+                window.stream = stream; // make stream available to console
+
+                video.srcObject = stream;
+                video.addEventListener("loadedmetadata", () => {
+                    video.play();
+                });
+
+            }
+
+
+            navigator.mediaDevices.enumerateDevices().then(gotDevices).then(start).catch(handleError);
+            //start();
+            //navigator.mediaDevices.getUserMedia(constraints).then(gotStream).catch(handleErrorBis);
+
+        </script>
+
+    </body>
+</html>
