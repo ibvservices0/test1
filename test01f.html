@@ -13,7 +13,7 @@
         <a href="javascript: history.go(-1)">Volver a MENU</a>
         <br><br>
         <h1>
-            TEST foto TORCH48
+            TEST foto TORCH50
         </h1>
         <br><br>
 
@@ -72,6 +72,7 @@
                 return myDeviceId;
             }
 
+
             function handleError(error) {
                 console.log('navigator.MediaDevices.getUserMedia error: ', error.message, error.name);
             }
@@ -110,8 +111,6 @@
                 videoTrack.applyConstraints({torch: true})
                     .then(() => console.log(videoTrack.getSettings().torch));
 
-                // Refresh button list in case labels have become available
-                //return navigator.mediaDevices.enumerateDevices();
             }
 
 
