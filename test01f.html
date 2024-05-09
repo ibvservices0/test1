@@ -13,7 +13,7 @@
         <a href="javascript: history.go(-1)">Volver a MENU</a>
         <br><br>
         <h1>
-            TEST foto TORCH33
+            TEST foto TORCH34
         </h1>
 
         <br>
@@ -77,7 +77,7 @@
                             devices.forEach((device) => {
                                 //console.log(`${device.kind}: ${device.label} id = ${device.deviceId}`);
                                 if (device.kind === 'videoinput'){
-                                    if ((device.label === 'camera2 0, facing back')||
+                                    if ((device.label.includes('0,'))||
                                     (device.label === 'Cámara trasera')||
                                     (device.label === 'Back Camera')){
                                         idSelected = device.deviceId;
