@@ -13,7 +13,7 @@
         <a href="javascript: history.go(-1)">Volver a MENU</a>
         <br><br>
         <h1>
-            TEST foto TORCH50
+            TEST foto TORCH51
         </h1>
         <br><br>
 
@@ -90,10 +90,26 @@
                     });
                 }
                 const videoSource = myIdDevice;
+                /*
                 const constraints = {
                     audio: false,
                     video: {deviceId: videoSource ? {exact: videoSource} : undefined}
                 };
+                */
+               let constraints;
+               if (videoSource){
+                    constraints = {
+                        audio: false,
+                        video: {deviceId: {exact: videoSource}}
+                    };
+               }
+               else{
+                    constraints = {
+                        audio: false,
+                        video: {facingMode: 'environment'}
+                    };
+               }
+
                 //navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevices).catch(handleError);
                 navigator.mediaDevices.getUserMedia(constraints).then(gotStream).catch(handleErrorBis);
             }
