@@ -13,13 +13,9 @@
         <a href="javascript: history.go(-1)">Volver a MENU</a>
         <br><br>
         <h1>
-            TEST foto TORCH44
+            TEST foto TORCH46
         </h1>
         <br><br>
-
-        <div class="select">
-            <label for="videoSource">Video source: </label><select id="videoSource"></select>
-        </div>
 
         <br>
         <!--<button id="but" style="font-size : 18px; width: 200px; height: 40px;">TOMAR FOTO</button>-->
@@ -53,17 +49,9 @@
                 tomaFoto();
             };
 
-            const videoSelect = document.querySelector('select#videoSource');
-            const selectors = [videoSelect];
+            let myDeviceId;
 
             function gotDevices(deviceInfos) {
-                // Handles being called several times to update labels. Preserve values.
-                const values = selectors.map(select => select.value);
-                selectors.forEach(select => {
-                    while (select.firstChild) {
-                        select.removeChild(select.firstChild);
-                    }
-                });
                 for (let i = 0; i !== deviceInfos.length; ++i) {
                     const deviceInfo = deviceInfos[i];
                     const option = document.createElement('option');
@@ -71,24 +59,18 @@
                     option.text = deviceInfo.label ;
 
                     if (deviceInfo.kind === 'videoinput') {
-                        /**/
+                        
                         if ((option.text.includes('0,'))||
                             (option.text === 'Cámara trasera')||
                             (option.text === 'Back Camera')){
-                                videoSelect.appendChild(option);
+                                myDeviceId = option.value;
+                                break;
                         } else {console.log('Some other kind of source/device: ', deviceInfo);}
-                        /**/
-                        //videoSelect.appendChild(option);
                         
                     } else {
                         console.log('Some other kind of source/device: ', deviceInfo);
                     }
                 }
-                selectors.forEach((select, selectorIndex) => {
-                    if (Array.prototype.slice.call(select.childNodes).some(n => n.value === values[selectorIndex])) {
-                        select.value = values[selectorIndex];
-                    }
-                });
             }
 
             function handleError(error) {
@@ -105,12 +87,13 @@
                         track.stop();
                     });
                 }
-                const videoSource = videoSelect.value;
+                const videoSource = myDeviceId;
                 const constraints = {
                     audio: false,
                     video: {deviceId: videoSource ? {exact: videoSource} : undefined}
                 };
-                navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevices).catch(handleError);
+                //navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevices).catch(handleError);
+                navigator.mediaDevices.getUserMedia(constraints).then(gotStream).catch(handleError);
             }
 
 
@@ -127,10 +110,9 @@
                     .then(() => console.log(videoTrack.getSettings().torch));
 
                 // Refresh button list in case labels have become available
-                return navigator.mediaDevices.enumerateDevices();
+                //return navigator.mediaDevices.enumerateDevices();
             }
 
-            videoSelect.onclick = start;
 
             start();
 
