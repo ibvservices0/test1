@@ -13,7 +13,7 @@
         <a href="javascript: history.go(-1)">Volver a MENU</a>
         <br><br>
         <h1>
-            TEST foto TORCH41
+            TEST foto TORCH42
         </h1>
         <br><br>
 
@@ -71,14 +71,14 @@
                     option.text = deviceInfo.label ;
 
                     if (deviceInfo.kind === 'videoinput') {
-                        /*
+                        /**/
                         if ((option.text.includes('0,'))||
                             (option.text === 'Cámara trasera')||
                             (option.text === 'Back Camera')){
                                 videoSelect.appendChild(option);
                         } else {console.log('Some other kind of source/device: ', deviceInfo);}
-                        */
-                        videoSelect.appendChild(option);
+                        /**/
+                        //videoSelect.appendChild(option);
                         
                     } else {
                         console.log('Some other kind of source/device: ', deviceInfo);
@@ -131,6 +131,8 @@
             }
 
             videoSelect.onchange = start;
+
+            start();
 
             start();
 
