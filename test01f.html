@@ -13,93 +13,117 @@
         <a href="javascript: history.go(-1)">Volver a MENU</a>
         <br><br>
         <h1>
-            TEST foto TORCH38
+            TEST foto TORCH39
         </h1>
+        <br><br>
+
+        <div class="select">
+            <label for="videoSource">Video source: </label><select id="videoSource"></select>
+        </div>
 
         <br>
-        <!--<button id="but" style="font-size : 18px; width: 200px; height: 40px;">Ver LOG</button>-->
-        <a id="but" class="btn btn-lg btn-success py-1" href="#" role="button">Ver LOG</a>
+        <!--<button id="but" style="font-size : 18px; width: 200px; height: 40px;">TOMAR FOTO</button>-->
+        <a id="but" class="btn btn-lg btn-success py-1" href="#" role="button">TOMAR FOTO</a>
+
         <!-- autoPlay + playsInline TRUE es obligatorio para que funcione en iOS-->
         <div>
             <video width="270px" height= "480px" id="vid" autoPlay="true" muted="true" playsInline="true"></video>
         </div>
+        <br>
+        <canvas id="thecanvas"></canvas>
+
 
         <script>
 
-            function restart(idDevice){
+            function tomaFoto(){
+                let videoBis = document.getElementById("vid");
+                let mycanvasBis = document.getElementById("thecanvas");
+                mycanvasBis.getContext('2d').drawImage(videoBis, 0, 0, mycanvasBis.width, mycanvasBis.height);
+            }
+
+            let but = document.getElementById("but");
+            let video = document.getElementById("vid");
+            let mycanvas = document.getElementById("thecanvas");
+            mycanvas.width = 360;
+            mycanvas.height = 640;
+
+            //but.addEventListener("click", () => {tomaFoto();});
+            but.onclick = function(e) {
+                e.preventDefault();
+                tomaFoto();
+            };
+
+            const videoSelect = document.querySelector('select#videoSource');
+            const selectors = [videoSelect];
+
+            function gotDevices(deviceInfos) {
+                // Handles being called several times to update labels. Preserve values.
+                const values = selectors.map(select => select.value);
+                selectors.forEach(select => {
+                    while (select.firstChild) {
+                        select.removeChild(select.firstChild);
+                    }
+                });
+                for (let i = 0; i !== deviceInfos.length; ++i) {
+                    const deviceInfo = deviceInfos[i];
+                    const option = document.createElement('option');
+                    option.value = deviceInfo.deviceId;
+                    if (deviceInfo.kind === 'videoinput') {
+                        option.text = deviceInfo.label || `camera ${videoSelect.length + 1}`;
+                        videoSelect.appendChild(option);
+                    } else {
+                        console.log('Some other kind of source/device: ', deviceInfo);
+                    }
+                }
+                selectors.forEach((select, selectorIndex) => {
+                    if (Array.prototype.slice.call(select.childNodes).some(n => n.value === values[selectorIndex])) {
+                        select.value = values[selectorIndex];
+                    }
+                });
+            }
+
+            function handleError(error) {
+                console.log('navigator.MediaDevices.getUserMedia error: ', error.message, error.name);
+            }
+
+
+            navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
+
+
+            function start() {
                 if (window.stream) {
                     window.stream.getTracks().forEach(track => {
                         track.stop();
                     });
                 }
-                let videoBis = document.getElementById("vid");
-                // Accessing the user camera and video.
-                navigator.mediaDevices.getUserMedia({
+                const videoSource = videoSelect.value;
+                const constraints = {
                     audio: false,
-                    video: {deviceId: {exact: idDevice}}
-                })
-                .then((streamBis) => {
-                    // Changing the source of video to current stream.
-                    videoBis.srcObject = streamBis;
-                    videoBis.addEventListener("loadedmetadata", () => {
-                        videoBis.play();
-                    });
-                    const videoTrack = streamBis.getVideoTracks()[0];
-                    videoTrack.applyConstraints({torch: true})
-                        .then(() => console.log(videoTrack.getSettings().torch));
-
-                }).catch(alert);
+                    video: {deviceId: videoSource ? {exact: videoSource} : undefined}
+                };
+                navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevices).catch(handleError);
             }
 
 
-            document.addEventListener("DOMContentLoaded", () => {
+            function gotStream(stream) {
+                window.stream = stream; // make stream available to console
 
-                let but = document.getElementById("but");
-                let video = document.getElementById("vid");
+                video.srcObject = stream;
+                video.addEventListener("loadedmetadata", () => {
+                    video.play();
+                });
 
-                let idSelected;
+                const videoTrack = stream.getVideoTracks()[0];
+                videoTrack.applyConstraints({torch: true})
+                    .then(() => console.log(videoTrack.getSettings().torch));
 
-                //but.addEventListener("click", () => {tomaFoto();});
-                but.onclick = function(e) {
-                    e.preventDefault();
-                    restart(idSelected);
-                    //alert('test');
-                };
+                // Refresh button list in case labels have become available
+                return navigator.mediaDevices.enumerateDevices();
+            }
 
+            videoSelect.onchange = start;
 
-                // Accessing the user camera and video.
-                navigator.mediaDevices.getUserMedia({
-                    audio: false,
-                    video: {deviceId: undefined}
-                })
-                .then((stream) => {
-                    // Changing the source of video to current stream.
-                    video.srcObject = stream;
-                    video.addEventListener("loadedmetadata", () => {
-                        video.play();
-
-                        navigator.mediaDevices.enumerateDevices()
-                        .then((devices) => {
-                            devices.forEach((device) => {
-                                //console.log(`${device.kind}: ${device.label} id = ${device.deviceId}`);
-                                if (device.kind === 'videoinput'){
-                                    if ((device.label.includes('0,'))||
-                                    (device.label === 'Cámara trasera')||
-                                    (device.label === 'Back Camera')){
-                                        idSelected = device.deviceId;
-                                        //restart(idSelected);
-                                    }
-                                }
-                            });
-                        })
-                        .catch((err) => {
-                            alert(err.message);
-                        });
-
-                    });
-                }).catch(alert);
-
-            });
+            start();
 
         </script>
 
