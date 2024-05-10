@@ -13,7 +13,7 @@
         <a href="javascript: history.go(-1)">Volver a MENU</a>
         <br><br>
         <h1>
-            TEST foto FLASH-2
+            TEST foto FLASH--2
         </h1>
         <br><br>
 
@@ -31,27 +31,19 @@
 
         <script>
 
-            /*
             function tomaFoto(){
                 let videoBis = document.getElementById("vid");
-                let fotoBis = document.getElementById("imagen");
+                let foto = document.getElementById("imagen");
                 const mediaStreamTrack = videoBis.srcObject.getVideoTracks()[0];
                 const imageCapture = new ImageCapture(mediaStreamTrack);
                 let photoSettings = {'fillLightMode': "flash", 'imageHeight': 640, 'imageWidth': 360};
+                //let photoSettings = {'fillLightMode': "flash"};
                 imageCapture.takePhoto(photoSettings).then(blob => {
-                    fotoBis.src = URL.createObjectURL(blob);
+                    foto.src = URL.createObjectURL(blob);
+                    //foto.onload = () => { URL.revokeObjectURL(this.src); }
                 })
                 .catch(error => console.error('takePhoto() error:', error));
             }
-            */
-
-
-            //let but = document.getElementById("but");
-            //let video = document.getElementById("vid");
-
-            //but.addEventListener("click", () => {tomaFoto();});
-            //but.onclick = function(e) {e.preventDefault();tomaFoto();};
-            //but.onclick = tomaFoto;
 
 
             function gotDevices(deviceInfos) {
@@ -119,32 +111,20 @@
 
 
             function gotStream(stream) {
-                let but = document.getElementById("but");
                 let video = document.getElementById("vid");
-                let foto = document.getElementById("imagen");
-
                 window.stream = stream; // make stream available to console
-
                 video.srcObject = stream;
                 video.addEventListener("loadedmetadata", () => {
                     video.play();
                 });
 
-                const mediaStreamTrack = stream.getVideoTracks()[0];
-                const imageCapture = new ImageCapture(mediaStreamTrack);
-
-                but.addEventListener("click", () => {
-                    let photoSettings = {'imageHeight': 640, 'imageWidth': 360};
-                    imageCapture.takePhoto(photoSettings).then(blob => {foto.src = URL.createObjectURL(blob);})
-                    .catch(error => console.error('takePhoto() error:', error));
-                    let photoSettingsBis = {'fillLightMode': "flash", 'imageHeight': 640, 'imageWidth': 360};
-                    imageCapture.takePhoto(photoSettingsBis).then(blob => {foto.src = URL.createObjectURL(blob);})
-                    .catch(error => console.error('takePhoto() error:', error));
-                });
-
             }
 
 
+            let but = document.getElementById("but");
+            but.onclick = tomaFoto;
+            //but.addEventListener("click", () => {tomaFoto();});
+            //but.onclick = function(e) {e.preventDefault();tomaFoto();};
             navigator.mediaDevices.enumerateDevices().then(gotDevices).then(start).catch(handleError);
             //start();
             //navigator.mediaDevices.getUserMedia(constraints).then(gotStream).catch(handleErrorBis);
