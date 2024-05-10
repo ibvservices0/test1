@@ -1,8 +1,8 @@
 'use strict';
 
 function tomaFoto(){
-    let videoBis = document.querySelector("vid");
-    //let mycanvasBis = document.querySelector("thecanvas");
+    let videoBis = document.getElementById("vid");
+    //let mycanvasBis = document.getElementById("thecanvas");
     //mycanvasBis.getContext('2d').drawImage(videoBis, 0, 0, mycanvasBis.width, mycanvasBis.height);
     createImageBitmap(videoBis)
         .then(imageBitmap => {verEnCanvasBis(imageBitmap);})
@@ -11,7 +11,7 @@ function tomaFoto(){
 
 
 function verEnCanvas(img){
-    let mycanvasBis = document.querySelector("thecanvas");
+    let mycanvasBis = document.getElementById("thecanvas");
     mycanvasBis.width = img.width;
     mycanvasBis.height = img.height;
     mycanvasBis.getContext('2d').drawImage(img, 0, 0);
@@ -20,7 +20,7 @@ function verEnCanvas(img){
 
 
 function verEnCanvasBis(img){
-    let mycanvas = document.querySelector("thecanvas");
+    let mycanvas = document.getElementById("thecanvas");
     //mycanvas.width = window.screen.width * window.devicePixelRatio;
     //mycanvas.height = window.screen.height * window.devicePixelRatio;
     mycanvas.width = window.screen.width;
@@ -102,7 +102,7 @@ function start(myIdDevice) {
 
 
 function gotStream(stream) {
-    let video = document.querySelector("vid");
+    let video = document.getElementById("vid");
     window.stream = stream; // make stream available to console
 
     video.srcObject = stream;
