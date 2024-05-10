@@ -13,7 +13,7 @@
         <a href="javascript: history.go(-1)">Volver a MENU</a>
         <br><br>
         <h1>
-            TEST foto TORCH-34
+            TEST foto TORCH-35
         </h1>
         <br><br>
 
@@ -51,8 +51,10 @@
 
             function verEnCanvasBis(img){
                 let mycanvas = document.getElementById("thecanvas");
-                mycanvas.width = window.screen.width * window.devicePixelRatio;
-                mycanvas.height = window.screen.height * window.devicePixelRatio;
+                //mycanvas.width = window.screen.width * window.devicePixelRatio;
+                //mycanvas.height = window.screen.height * window.devicePixelRatio;
+                mycanvas.width = window.screen.width;
+                mycanvas.height = window.screen.height;
                 //mycanvas.width = window.getComputedStyle(...).width.split('px')[0];
                 //mycanvas.height = window.getComputedStyle(...).height.split('px')[0];
                 let ratio  = Math.min(mycanvas.width / img.width, mycanvas.height / img.height);
