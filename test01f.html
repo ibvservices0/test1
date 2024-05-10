@@ -13,7 +13,7 @@
         <a href="javascript: history.go(-1)">Volver a MENU</a>
         <br><br>
         <h1>
-            TEST foto TORCH-2
+            TEST foto TORCH-31
         </h1>
         <br><br>
 
@@ -26,28 +26,28 @@
             <video width="270px" height= "480px" id="vid" autoPlay="true" muted="true" playsInline="true"></video>
         </div>
         <br>
-        <canvas id="thecanvas"></canvas>
+        <canvas class="hidden" id="thecanvas"></canvas>
 
 
         <script>
 
             function tomaFoto(){
                 let videoBis = document.getElementById("vid");
-                let mycanvasBis = document.getElementById("thecanvas");
-                mycanvasBis.getContext('2d').drawImage(videoBis, 0, 0, mycanvasBis.width, mycanvasBis.height);
+                //let mycanvasBis = document.getElementById("thecanvas");
+                //mycanvasBis.getContext('2d').drawImage(videoBis, 0, 0, mycanvasBis.width, mycanvasBis.height);
+                createImageBitmap(videoBis)
+                    .then(imageBitmap => {verEnCanvas(imageBitmap);})
+                    .catch(error => alert(error.message));
             }
 
-            let but = document.getElementById("but");
-            let video = document.getElementById("vid");
-            let mycanvas = document.getElementById("thecanvas");
-            mycanvas.width = 360;
-            mycanvas.height = 640;
 
-            //but.addEventListener("click", () => {tomaFoto();});
-            but.onclick = function(e) {
-                e.preventDefault();
-                tomaFoto();
-            };
+            function verEnCanvas(img){
+                let mycanvasBis = document.getElementById("thecanvas");
+                mycanvasBis.width = img.width;
+                mycanvasBis.height = img.height;
+                mycanvasBis.getContext('2d').drawImage(img, 0, 0);
+                mycanvasBis.classList.remove('hidden');
+            }
 
 
             function gotDevices(deviceInfos) {
@@ -129,6 +129,10 @@
             }
 
 
+            let but = document.getElementById("but");
+            but.onclick = tomaFoto;
+            //but.addEventListener("click", () => {tomaFoto();});
+            //but.onclick = function(e) {e.preventDefault(); tomaFoto();};
             navigator.mediaDevices.enumerateDevices().then(gotDevices).then(start).catch(handleError);
             //start();
             //navigator.mediaDevices.getUserMedia(constraints).then(gotStream).catch(handleErrorBis);
