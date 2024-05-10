@@ -118,8 +118,8 @@ function gotStream(stream) {
 
 
 let but = document.querySelector("but");
-but.onclick = tomaFoto;
-//but.addEventListener("click", () => {tomaFoto();});
+//but.onclick = tomaFoto;
+but.addEventListener("click", () => {tomaFoto();});
 //but.onclick = function(e) {e.preventDefault(); tomaFoto();};
 
 navigator.mediaDevices.enumerateDevices().then(gotDevices).then(start).catch(handleError);
