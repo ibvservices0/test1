@@ -117,7 +117,7 @@ function gotStream(stream) {
 }
 
 
-let but = document.querySelector("but");
+let but = document.getElementById("but");
 //but.onclick = tomaFoto;
 but.addEventListener("click", () => {tomaFoto();});
 //but.onclick = function(e) {e.preventDefault(); tomaFoto();};
